@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+        body {
+
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('https://images.unsplash.com/photo-1548092372-0d1bd40894a3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80');
+        }
+
+        /* Navbar styles */
+        .navbar {
+            background-color: #315294;
+            display: flex;
+            justify-content: center;
+            /* Center the navbar items */
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+            top: 0%;
+        }
+
+        /* Style for the navbar links */
+        .navbar a {
+            display: inline-block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+
+        /* Main content styles */
+        .content {
+            padding-top: 70px;
+
+        }
+
+        h1 {
+            color: #333;
+            font-size: 24px;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .form-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 40px;
+
+
+        }
+
+        .login-container {
+            background: linear-gradient(to top left, #00cc99 0%, #333399 100%);
+            padding: 10px;
+            margin-left: 400px;
+            margin-right: 400px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+        }
+
+        .form-box {
+            padding: 50px;
+        }
+
+        .form-group {
+            align-items: center;
+            margin-bottom: 20px;
+            margin-left: 25px;
+            margin-right: 25px;
+        }
+
+        .login-form {
+            padding: 10px;
+            margin: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"] {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            width: 100%;
+            background-color: #f2f2f2;
+        }
+
+        button[type="submit"] {
+            align-items: center;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            margin-left: 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #3e8e41;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <a href="/about">About</a>
+        <a href="/register" onclick="alert('Registration form will be displayed soon!')">Register</a>
+        <a href="/loginpage" onclick="alert('Login form will be displayed soon!')">Login</a>
+
+    </div>
+
+
+    <div class="form-box">
+        <h1>Registration Form</h1>
+
+        <div class="login-container">
+            <form class="login-form" method="post" action="/register">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username" name="username"
+                        placeholder="Create A Username (use only letters and numbers)" Required>
+                </div>
+
+                <div class="form-group">
+                    <label for="fullname">Full name</label>
+                    <input type="text" class="form-control" id="fullname" name="fullname"
+                        placeholder="Enter your full name" Required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email"
+                        placeholder="Enter Your Email Address" Required>
+                </div>
+                <div class="form-group">
+                    <label for="pass1">Password</label>
+                    <input type="password" class="form-control" id="pass1" name="pass1"
+                        placeholder="Create Your Password" Required>
+                        <input type="checkbox" onclick="showPassword()"> Show password
+
+                    <div id="password-strength" style="padding: 10px;"></div>
+
+
+                </div>
+                <div class="form-group">
+                    <label for="pass2">Confirm Password</label>
+                    <input type="password" class="form-control" id="pass2" name="pass2"
+                        placeholder="Confirm Your Password" Required>
+                    {% for message in messages %}
+                    {% if messages %}
+                    <div class="alert alert-danger">
+                        {% for message in messages %}
+                        <p style="color: red;">{{ message }}</p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    {%endfor%}
+
+                </div>
+                <script src='https://www.google.com/recaptcha/api.js'></script>
+                <div class="g-recaptcha" data-sitekey='6Lee7hslAAAAANLJQ4j8s7szGcPyOG-73w5bphkf'
+                    style="padding: 10px; margin-left: 20px;" Required>{{ captcha }}</div>
+
+                <button type="submit" class="btn btn-primary">Register</button>
+                <div class="form-group">
+                    <p><a href="/loginpage">Already have an account? Click here to login</a></p>
+                </div>
+
+            </form>
+            <script>
+                function showPassword() {
+                    var x = document.getElementById("pass1");
+                    if (x.type === "password") {
+                        x.type = "text";
+                    } else {
+                        x.type = "password";
+                    }
+                }
+
+                const passwordInput = document.querySelector('#pass1');
+                const passwordStrength = document.querySelector('#password-strength');
+
+                passwordInput.addEventListener('input', function () {
+                    const password = passwordInput.value;
+                    const { strength, color } = checkPasswordStrength(password);
+                    passwordStrength.textContent = `Password strength: ${strength}`;
+                    passwordStrength.style.color = color;
+                });
+
+
+                function checkPasswordStrength(password) {
+
+                    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[a-zA-Z\d!@#$%^&*()_+]{8,}$/;
+                    const requirements = [
+                        { pattern: /[a-z]/, desc: 'lowercase letter' },
+                        { pattern: /[A-Z]/, desc: 'uppercase letter' },
+                        { pattern: /\d/, desc: 'numeric value' },
+                        { pattern: /[!@#$%^&*()_+]/, desc: 'special character (!@#$%^&*()_+)' }
+                    ];
+                    let missingRequirements = 0;
+                    for (const req of requirements) {
+                        if (!req.pattern.test(password)) {
+                            missingRequirements++;
+                        }
+                    }
+                    if (missingRequirements <= 0 && password.length >= 8) {
+                        return { strength: 'Strong', color: '#77dd77' };
+                    } else if (missingRequirements <= 1) {
+                        return { strength: 'Moderate', color: 'yellow' };
+                    } else {
+                        return { strength: 'Weak', color: 'red' };
+                    }
+                }
+
+
+
+
+            </script>
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>User Login</title>
+  <link rel="stylesheet">
+  <style>
+    body {
+      background-image: url('https://images.unsplash.com/photo-1548092372-0d1bd40894a3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80');
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Navbar styles */
+    .navbar {
+      background-color: #315294;
+      display: flex;
+      justify-content: center;
+      /* Center the navbar items */
+      overflow: hidden;
+      position: fixed;
+      width: 100%;
+      top: 0%;
+    }
+
+    /* Style for the navbar links */
+    .navbar a {
+      display: inline-block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    .navbar a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    /* Main content styles */
+    .content {
+      margin-top: 80px;
+      padding: 20px;
+    }
+
+    h3 {
+      color: #333;
+      font-size: 36px;
+      text-align: center;
+      padding: 30px;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 50px;
+    }
+
+    button {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      background-color: #3e8e41;
+    }
+
+    /* Footer styles */
+    .footer {
+      background-color: #315294;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+    }
+
+    .login-container {
+      background: linear-gradient(to top left, #00cc99 0%, #333399 100%);
+      padding: 20px;
+      margin-left: 400px;
+      margin-right: 400px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 20px;
+    }
+
+    .form-group {
+      align-items: center;
+      margin-bottom: 20px;
+      margin-left: 50px;
+      margin-right: 50px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      width: 100%;
+      background-color: #f2f2f2;
+    }
+
+    button[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      margin-left: 50px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #3e8e41;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="navbar">
+    
+    <a href="/about">About</a>
+    <a href="/register" onclick="alert('Registration form will be displayed soon!')">Register</a>
+    <a href="/loginpage" onclick="alert('Login form will be displayed soon!')">Login</a>
+    
+  </div>
+
+  <div class="form-box">
+    <h3>Login</h3>
+    
+    <div class="login-container">
+
+      <form class="login-form" action="/reset_form" method="POST">
+        {% csrf_token %}
+
+        {% if messages %}
+        <div class="alert alert-danger">
+          {% for message in messages %}
+          <p style="color: red;">{{ message }}</p>
+          {% endfor %}
+        </div>
+        {% endif %}
+        <p>Enter your email address. The reset link will be sent to your validated email</p>
+        <div class="form-group">
+          <label for="email">Your Valid Email</label>
+          <input type="email" id="email" name="email" placeholder="Enter your Email" Required>
+        </div>
+
+        <button type="submit">Reset Password</button>
+      </form>
+    </div>
+  </div>
+  <div class="footer">
+    <p>&copy; 2023 Security Login. All rights reserved.</p>
+  </div>
+
+</body>
+
+</html>
